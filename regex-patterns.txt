@@ -1,52 +1,52 @@
 # Generic API Keys & Secrets
-(?i)(api|access|secret)?_?key["']?\s*[:=]\s*["'][A-Za-z0-9_\-]{16,}["']
-AKIA[0-9A-Z]{16}                                    # AWS Access Key ID
-(?i)aws.+(secret|private).+["']([A-Za-z0-9/+=]{40})["']
-AIza[0-9A-Za-z\\-_]{35}                             # Google API Key
-https:\/\/[a-z0-9-]+\.firebaseio\.com               # Firebase URL
+rg --pcre2 '(?i)(api|access|secret)?_?key["'\''"]?\s*[:=]\s*["'\''"][A-Za-z0-9_\-]{16,}["'\''"]' .
+rg --pcre2 'AKIA[0-9A-Z]{16}' .
+rg --pcre2 '(?i)aws.+(secret|private).+["'\''"]([A-Za-z0-9/+=]{40})["'\''"]' .
+rg --pcre2 'AIza[0-9A-Za-z\\-_]{35}' .
+rg --pcre2 'https:\/\/[a-z0-9-]+\.firebaseio\.com' .
 
 # Passwords, Secrets, Tokens
-(?i)(password|passwd|pwd)["']?\s*[:=]\s*["'][^"'\s]{6,}["']
-(?i)(secret|token|auth)["']?\s*[:=]\s*["'][A-Za-z0-9\-_]{8,}["']
-eyJ[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+   # JWT Token
-(?i)Bearer\s+[A-Za-z0-9\-_.~+/]+=*
+rg --pcre2 '(?i)(password|passwd|pwd)["'\''"]?\s*[:=]\s*["'\''"][^"'\''\s]{6,}["'\''"]' .
+rg --pcre2 '(?i)(secret|token|auth)["'\''"]?\s*[:=]\s*["'\''"][A-Za-z0-9\-_]{8,}["'\''"]' .
+rg --pcre2 'eyJ[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+' .
+rg --pcre2 '(?i)Bearer\s+[A-Za-z0-9\-_.~+/]+=*' .
 
 # Environment Variables
-(?i)^\s*[A-Z_]+(?:_)?(KEY|TOKEN|SECRET|PASSWORD|PWD)\s*=\s*.+
-[a-zA-Z0-9]+:[^@]+@                                 # Basic Auth in URL
-[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}:[^\s"']+ # Email:Password
+rg --pcre2 '(?i)^\s*[A-Z_]+(?:_)?(KEY|TOKEN|SECRET|PASSWORD|PWD)\s*=\s*.+' .
+rg --pcre2 '[a-zA-Z0-9]+:[^@]+@' .
+rg --pcre2 '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}:[^\s"'\''"]+' .
 
 # OAuth & Platform Tokens
-(?i)(oauth(_)?token)["']?\s*[:=]\s*["'][A-Za-z0-9\-._~+/]+=*["']
-xox[baprs]-[A-Za-z0-9-]{10,48}                      # Slack Token
-ghp_[A-Za-z0-9]{36}                                 # GitHub Token
-glpat-[A-Za-z0-9\-]{20,}                            # GitLab Token
-mfa\.[A-Za-z0-9-_]{84}                              # Discord Token
+rg --pcre2 '(?i)(oauth(_)?token)["'\''"]?\s*[:=]\s*["'\''"][A-Za-z0-9\-._~+/]+=*["'\''"]' .
+rg --pcre2 'xox[baprs]-[A-Za-z0-9-]{10,48}' .
+rg --pcre2 'ghp_[A-Za-z0-9]{36}' .
+rg --pcre2 'glpat-[A-Za-z0-9\-]{20,}' .
+rg --pcre2 'mfa\.[A-Za-z0-9-_]{84}' .
 
 # Cloud Platform Keys
-(?i)(azure).*(client|app).*(secret).*[=:]\s*['"][A-Za-z0-9\-._~+/=]{10,}['"]
-(?i)heroku.*key.*[:=]\s*["'][A-Za-z0-9]{32,}["']
-do[0-9a-f]{62}                                      # DigitalOcean Token
-AC[a-z0-9]{32}|[a-z0-9]{32}                         # Twilio SID/Secret
+rg --pcre2 '(?i)(azure).*(client|app).*(secret).*[=:]\s*["'\''"][A-Za-z0-9\-._~+/=]{10,}["'\''"]' .
+rg --pcre2 '(?i)heroku.*key.*[:=]\s*["'\''"][A-Za-z0-9]{32,}["'\''"]' .
+rg --pcre2 'do[0-9a-f]{62}' .
+rg --pcre2 'AC[a-z0-9]{32}|[a-z0-9]{32}' .
 
 # Secrets in URLs / URIs
-mongodb(\+srv)?:\/\/[^@\s]+:[^@\s]+@[^@\s]+
-postgres(?:ql)?:\/\/[^@\s]+:[^@\s]+@[^@\s]+
-s3:\/\/[a-zA-Z0-9._-]+\/?
+rg --pcre2 'mongodb(\+srv)?:\/\/[^@\s]+:[^@\s]+@[^@\s]+' .
+rg --pcre2 'postgres(?:ql)?:\/\/[^@\s]+:[^@\s]+@[^@\s]+' .
+rg --pcre2 's3:\/\/[a-zA-Z0-9._-]+\/?' .
 
 # Service Provider Keys
-SG\.[A-Za-z0-9._-]{16,}\.[A-Za-z0-9._-]{16,}         # SendGrid Key
-sk_(live|test)_[0-9a-zA-Z]{24}                       # Stripe Key
-key-[0-9a-zA-Z]{32}                                  # Mailgun
-(?i)algolia.*admin.*key.*[:=]\s*["'][A-Za-z0-9]{32,}["']
-AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140}              # Firebase Secret
+rg --pcre2 'SG\.[A-Za-z0-9._-]{16,}\.[A-Za-z0-9._-]{16,}' .
+rg --pcre2 'sk_(live|test)_[0-9a-zA-Z]{24}' .
+rg --pcre2 'key-[0-9a-zA-Z]{32}' .
+rg --pcre2 '(?i)algolia.*admin.*key.*[:=]\s*["'\''"][A-Za-z0-9]{32,}["'\''"]' .
+rg --pcre2 'AAAA[a-zA-Z0-9_-]{7}:[a-zA-Z0-9_-]{140}' .
 
 # Crypto Keys / HMAC / Signing Keys
-(?i)hmac.*secret.*[:=]\s*["'][A-Fa-f0-9+/=]{32,}["']
-(?i)(aes|des|rsa|encryption).*key.*[:=]\s*["'][A-Za-z0-9+/=]{16,}["']
------BEGIN (RSA|DSA|EC|OPENSSH) PRIVATE KEY-----
-ssh-rsa\s+[A-Za-z0-9+/=]+
------BEGIN PGP PRIVATE KEY BLOCK-----
+rg --pcre2 '(?i)hmac.*secret.*[:=]\s*["'\''"][A-Fa-f0-9+/=]{32,}["'\''"]' .
+rg --pcre2 '(?i)(aes|des|rsa|encryption).*key.*[:=]\s*["'\''"][A-Za-z0-9+/=]{16,}["'\''"]' .
+rg --pcre2 '-----BEGIN (RSA|DSA|EC|OPENSSH) PRIVATE KEY-----' .
+rg --pcre2 'ssh-rsa\s+[A-Za-z0-9+/=]+' .
+rg --pcre2 '-----BEGIN PGP PRIVATE KEY BLOCK-----' .
 
 # Generic JSON/YAML style secrets
-["']?(api[_-]?key|secret|token|auth|passwd|password)["']?\s*[:=]\s*["'][^"']{8,}["']
+rg --pcre2 '["'\''"]?(api[_-]?key|secret|token|auth|passwd|password)["'\''"]?\s*[:=]\s*["'\''"][^"'\''"]{8,}["'\''"]' .
